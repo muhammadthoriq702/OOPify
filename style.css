@@ -43,7 +43,7 @@ body {
 
 .sidebar ul li {
   font-size: 0.9em; /* Atur ukuran font menjadi lebih kecil */
-  padding: 5px;
+  padding: 3px;
   cursor: pointer;
   color: #ddd;
 }
@@ -53,7 +53,12 @@ body {
 }
 
 .sidebar ul li.active {
-  background-color: rgba(255, 208, 155, 0.8); /* Warna latar belakang setelah diklik dengan 80% opacity */
+  background-color: rgba(
+    255,
+    208,
+    155,
+    0.8
+  ); /* Warna latar belakang setelah diklik dengan 80% opacity */
 }
 
 .sidebar-logo {
@@ -114,6 +119,13 @@ body {
   -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
   -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
   -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.drop {
+  background-color: #e0e0e0;
+  color: #e0e0e0;
+  height: 1500px;
+  width: 2000px;
 }
 
 .block-option-class {
@@ -393,12 +405,40 @@ body {
   transform-origin: top left;
 }
 
+/* Mengubah tampilan scrollbar vertikal */
+#workspace::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+  height: 8px;
+}
+
+/* Mengubah tampilan track (bagian latar belakang scrollbar) */
+#workspace::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Warna latar belakang track scrollbar */
+  border-radius: 4px; /* Membuat track menjadi melengkung */
+}
+
+/* Mengubah tampilan thumb (bagian yang digeser) */
+#workspace::-webkit-scrollbar-thumb {
+  background: #888; /* Warna thumb scrollbar */
+  border-radius: 4px; /* Membuat thumb melengkung */
+  border: 2px solid #f4f4f9; /* Membuat border tipis agar thumb terlihat lebih elegan */
+}
+
+/* Menambahkan efek hover pada thumb scrollbar */
+#workspace::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna lebih gelap saat hover */
+}
+
 #workspace h2 {
   text-align: center;
+  z-index: 1000;
   user-select: none; /* Mencegah seleksi teks */
   -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
   -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
   -moz-user-select: none; /* Dukungan untuk Firefox */
+  position: fixed; /* Membuat elemen tetap di posisi viewport */
+  top: 10px; /* Posisi dari atas viewport */
+  width: 72%; /* Membuat elemen menutupi lebar viewport */
   
 }
 
@@ -406,13 +446,17 @@ body {
   transform-origin: top left;
   transition: transform 0.2s ease-in-out;
   position: relative;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
 }
 
-
 #trash-bin {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  position: fixed;
+  right: 35px;
+  bottom: 35px;
+  z-index: 1000;
   font-size: 24px;
   cursor: pointer;
   color: #ff0000;
@@ -455,12 +499,15 @@ body {
 }
 
 #zoom-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
   z-index: 1000;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
 }
-
 
 #zoom-controls button {
   padding: 5px 10px;

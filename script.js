@@ -5,12 +5,16 @@ let offsetY = 0;
 const trashBin = document.getElementById("trash-bin");
 
 const SNAP_DISTANCE = 10; // Jarak toleransi untuk snap (dalam pixel)
-const SNAP_OFFSET_X = -11; // Offset horizontal tambahan
-const SNAP_OFFSET_Y = 0; // Offset vertikal tambahan
+
+// Offset untuk snap ke kanan dan bawah
+const SNAP_OFFSETS = {
+  right: { x: -11, y: 0 }, // Offset untuk snap ke kanan
+  bottom: { x: 0, y: -16 }, // Offset untuk snap ke bawah
+};
 
 document.addEventListener("mouseup", () => {
   if (currentDraggedBlock) {
-    const workspace = document.getElementById("workspace");
+    const workspace = document.getElementById("workspace-content");
     const trashBinRect = trashBin.getBoundingClientRect();
     const draggedRect = currentDraggedBlock.getBoundingClientRect();
 
@@ -32,17 +36,36 @@ document.addEventListener("mouseup", () => {
 
       const blockRect = block.getBoundingClientRect();
       const distanceRight = Math.abs(draggedRect.left - blockRect.right);
+      const distanceBottom = Math.abs(draggedRect.top - blockRect.bottom);
 
-      // Snap ke kanan dengan offset
+      // Snap ke kanan dengan offset khusus
       if (
         distanceRight <= SNAP_DISTANCE &&
         draggedRect.bottom > blockRect.top &&
         draggedRect.top < blockRect.bottom
       ) {
         currentDraggedBlock.style.left = `${
-          block.offsetLeft + block.offsetWidth + SNAP_OFFSET_X
+          block.offsetLeft + block.offsetWidth + SNAP_OFFSETS.right.x
         }px`;
-        currentDraggedBlock.style.top = `${block.offsetTop + SNAP_OFFSET_Y}px`;
+        currentDraggedBlock.style.top = `${
+          block.offsetTop + SNAP_OFFSETS.right.y
+        }px`;
+        snapped = true;
+        break;
+      }
+
+      // Snap ke bawah dengan offset khusus
+      if (
+        distanceBottom <= SNAP_DISTANCE &&
+        draggedRect.right > blockRect.left &&
+        draggedRect.left < blockRect.right
+      ) {
+        currentDraggedBlock.style.left = `${
+          block.offsetLeft + SNAP_OFFSETS.bottom.x
+        }px`;
+        currentDraggedBlock.style.top = `${
+          block.offsetTop + block.offsetHeight + SNAP_OFFSETS.bottom.y
+        }px`;
         snapped = true;
         break;
       }
@@ -103,9 +126,11 @@ document.querySelectorAll(".block-option-class").forEach((blockOption) => {
   });
 });
 
-document.getElementById("workspace").addEventListener("dragover", (event) => {
-  event.preventDefault();
-});
+document
+  .getElementById("workspace-content")
+  .addEventListener("dragover", (event) => {
+    event.preventDefault();
+  });
 
 document.querySelectorAll(".block-option-datatype").forEach((blockOption) => {
   const img = blockOption.dataset.img;
@@ -364,37 +389,39 @@ function createInputBlock() {
 
   block.appendChild(resizeHandle);
 
-  document.getElementById("workspace").appendChild(block);
+  document.getElementById("workspace-content").appendChild(block);
   document.getElementById("input-name").value = ""; // Clear input field
 }
 
-document.getElementById("workspace").addEventListener("drop", (event) => {
-  event.preventDefault();
+document
+  .getElementById("workspace-content")
+  .addEventListener("drop", (event) => {
+    event.preventDefault();
 
-  // Ambil data elemen dari drag
-  const type = event.dataTransfer.getData("type");
-  const img = event.dataTransfer.getData("img");
-  const width = event.dataTransfer.getData("width");
-  const height = event.dataTransfer.getData("height");
+    // Ambil data elemen dari drag
+    const type = event.dataTransfer.getData("type");
+    const img = event.dataTransfer.getData("img");
+    const width = event.dataTransfer.getData("width");
+    const height = event.dataTransfer.getData("height");
 
-  // Jika elemen di-drop di atas elemen lain, tetap tambahkan ke workspace
-  let dropTarget = event.target;
-  if (dropTarget.id !== "workspace") {
-    dropTarget = document.getElementById("workspace"); // Set target drop menjadi workspace
-  }
+    // Jika elemen di-drop di atas elemen lain, tetap tambahkan ke workspace
+    let dropTarget = event.target;
+    if (dropTarget.id !== "workspace-content") {
+      dropTarget = document.getElementById("workspace-content"); // Set target drop menjadi workspace
+    }
 
-  // Buat block baru
-  const block = createPNGBlock(type, img, width, height);
+    // Buat block baru
+    const block = createPNGBlock(type, img, width, height);
 
-  // Hitung posisi relatif di dalam workspace
-  const workspaceRect = dropTarget.getBoundingClientRect();
-  block.style.top = `${event.clientY - workspaceRect.top}px`;
-  block.style.left = `${event.clientX - workspaceRect.left}px`;
+    // Hitung posisi relatif di dalam workspace
+    const workspaceRect = dropTarget.getBoundingClientRect();
+    block.style.top = `${event.clientY - workspaceRect.top}px`;
+    block.style.left = `${event.clientX - workspaceRect.left}px`;
 
-  // Tambahkan elemen ke workspace
-  blocksInWorkspace.push({ element: block, type, content: "", children: [] });
-  dropTarget.appendChild(block);
-});
+    // Tambahkan elemen ke workspace
+    blocksInWorkspace.push({ element: block, type, content: "", children: [] });
+    dropTarget.appendChild(block);
+  });
 
 // Function to create a new block based on type and image
 function createPNGBlock(type, img, width, height) {
@@ -424,58 +451,62 @@ function createPNGBlock(type, img, width, height) {
 }
 
 // Modify the drop event listener
-document.getElementById("workspace").addEventListener("drop", (event) => {
-  event.preventDefault();
+document
+  .getElementById("workspace-content")
+  .addEventListener("drop", (event) => {
+    event.preventDefault();
 
-  // Get data from the drag event
-  const type = event.dataTransfer.getData("type");
-  const img = event.dataTransfer.getData("img");
-  const width = event.dataTransfer.getData("width");
-  const height = event.dataTransfer.getData("height");
+    // Get data from the drag event
+    const type = event.dataTransfer.getData("type");
+    const img = event.dataTransfer.getData("img");
+    const width = event.dataTransfer.getData("width");
+    const height = event.dataTransfer.getData("height");
 
-  // Set the drop target to the workspace if necessary
-  let dropTarget = event.target;
-  if (dropTarget.id !== "workspace") {
-    dropTarget = document.getElementById("workspace");
-  }
-
-  // Calculate the relative position inside the workspace
-  const workspaceRect = dropTarget.getBoundingClientRect();
-  block.style.top = `${event.clientY - workspaceRect.top}px`;
-  block.style.left = `${event.clientX - workspaceRect.left}px`;
-
-  // Add the block to the workspace
-  blocksInWorkspace.push({ element: block, type, content: "", children: [] });
-  dropTarget.appendChild(block);
-});
-
-document.getElementById("workspace").addEventListener("mousemove", (event) => {
-  if (currentDraggedBlock) {
-    const workspaceRect = document
-      .getElementById("workspace")
-      .getBoundingClientRect();
-    currentDraggedBlock.style.left = `${
-      event.clientX - workspaceRect.left - offsetX
-    }px`;
-    currentDraggedBlock.style.top = `${
-      event.clientY - workspaceRect.top - offsetY
-    }px`;
-
-    const trashBinRect = trashBin.getBoundingClientRect();
-    const blockRect = currentDraggedBlock.getBoundingClientRect();
-
-    if (
-      blockRect.right > trashBinRect.left &&
-      blockRect.left < trashBinRect.right &&
-      blockRect.bottom > trashBinRect.top &&
-      blockRect.top < trashBinRect.bottom
-    ) {
-      trashBin.classList.add("active");
-    } else {
-      trashBin.classList.remove("active");
+    // Set the drop target to the workspace if necessary
+    let dropTarget = event.target;
+    if (dropTarget.id !== "workspace-content") {
+      dropTarget = document.getElementById("workspace-content");
     }
-  }
-});
+
+    // Calculate the relative position inside the workspace
+    const workspaceRect = dropTarget.getBoundingClientRect();
+    block.style.top = `${event.clientY - workspaceRect.top}px`;
+    block.style.left = `${event.clientX - workspaceRect.left}px`;
+
+    // Add the block to the workspace
+    blocksInWorkspace.push({ element: block, type, content: "", children: [] });
+    dropTarget.appendChild(block);
+  });
+
+document
+  .getElementById("workspace-content")
+  .addEventListener("mousemove", (event) => {
+    if (currentDraggedBlock) {
+      const workspaceRect = document
+        .getElementById("workspace-content")
+        .getBoundingClientRect();
+      currentDraggedBlock.style.left = `${
+        event.clientX - workspaceRect.left - offsetX
+      }px`;
+      currentDraggedBlock.style.top = `${
+        event.clientY - workspaceRect.top - offsetY
+      }px`;
+
+      const trashBinRect = trashBin.getBoundingClientRect();
+      const blockRect = currentDraggedBlock.getBoundingClientRect();
+
+      if (
+        blockRect.right > trashBinRect.left &&
+        blockRect.left < trashBinRect.right &&
+        blockRect.bottom > trashBinRect.top &&
+        blockRect.top < trashBinRect.bottom
+      ) {
+        trashBin.classList.add("active");
+      } else {
+        trashBin.classList.remove("active");
+      }
+    }
+  });
 
 document.addEventListener("mouseup", () => {
   if (currentDraggedBlock) {
@@ -534,4 +565,3 @@ document.getElementById("zoom-reset").addEventListener("click", () => {
 function updateZoom() {
   workspaceContent.style.transform = `scale(${zoomLevel})`;
 }
-
