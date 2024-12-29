@@ -1,0 +1,523 @@
+body {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transform-origin: top left;
+  overflow: hidden; /* Prevent scrollbars from showing */
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 0.5fr 2.5fr 11fr; /* Sidebar, konten utama, kolom tambahan 1, dan kolom kanan */
+  gap: 10px;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #ffffff;
+  color: black;
+  padding: 20px;
+  padding-bottom: 0px;
+  outline: 2px solid #ffd09b;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.sidebar h2 {
+  margin-top: 0%;
+  margin-bottom: 10px;
+  text-align: center;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  font-size: 0.9em; /* Atur ukuran font menjadi lebih kecil */
+  padding: 3px;
+  cursor: pointer;
+  color: #ddd;
+}
+
+.sidebar ul li:hover {
+  background-color: rgba(255, 236, 200, 0.8);
+}
+
+.sidebar ul li.active {
+  background-color: rgba(255, 208, 155, 0.8); /* Warna latar belakang setelah diklik dengan 80% opacity */
+}
+
+.sidebar-logo {
+  width: 60px; /* Atur ukuran gambar sesuai kebutuhan */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Kolom konten utama */
+.content {
+  flex: 1;
+  padding: 10px;
+  background-color: #f4f4f9;
+  outline: 2px solid #ffd09b;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Mengubah tampilan scrollbar vertikal */
+.content::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+}
+
+/* Mengubah tampilan track (bagian latar belakang scrollbar) */
+.content::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Warna latar belakang track scrollbar */
+  border-radius: 4px; /* Membuat track menjadi melengkung */
+}
+
+/* Mengubah tampilan thumb (bagian yang digeser) */
+.content::-webkit-scrollbar-thumb {
+  background: #888; /* Warna thumb scrollbar */
+  border-radius: 4px; /* Membuat thumb melengkung */
+  border: 2px solid #f4f4f9; /* Membuat border tipis agar thumb terlihat lebih elegan */
+}
+
+/* Menambahkan efek hover pada thumb scrollbar */
+.content::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna lebih gelap saat hover */
+}
+
+.content h2 {
+  margin-top: 10px;
+  text-align: center;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.content h4 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.drop {
+  background-color: #e0e0e0;
+  color: #e0e0e0;
+  height: 1500px;
+  width: 2000px;
+}
+
+.block-option-class {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 600px;
+}
+
+.block-option-class:hover {
+  background-color: #bbb;
+}
+
+.block-option-datatype {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+}
+
+.block-option-datatype:hover {
+  background-color: #bbb;
+}
+
+.block-option-connector {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+}
+
+.block-option-connector:hover {
+  background-color: #bbb;
+}
+
+.block-option-modifier {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100px;
+}
+
+.block-option-modifier:hover {
+  background-color: #bbb;
+}
+
+.block-option-method {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 230px;
+}
+
+.block-option-method:hover {
+  background-color: #bbb;
+}
+
+.block-option-constructor {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 230px;
+}
+
+.block-option-constructor:hover {
+  background-color: #bbb;
+}
+
+.block-option-condition {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 210px;
+}
+
+.block-option-condition:hover {
+  background-color: #bbb;
+}
+
+.block-option-miniclass {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 230px;
+}
+
+.block-option-miniclass:hover {
+  background-color: #bbb;
+}
+
+.block-option-operational {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 50px;
+}
+
+.block-option-operational:hover {
+  background-color: #bbb;
+}
+
+.block-option-control {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 250px;
+}
+
+.block-option-control:hover {
+  background-color: #bbb;
+}
+
+/* .  an {
+  position: absolute;
+  background-repeat: no-repeat;
+  cursor: grab;
+  width: 77px;
+  height: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+   box-sizing: border-box;
+  text-align: center;
+  padding: 5px;
+  word-wrap: break-word;
+} */
+
+.inputan {
+  background-color: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 5px;
+  overflow-wrap: break-word;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.input-container {
+  background-color: white;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  margin: 0 auto;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.input-container input {
+  width: 85%;
+  padding-top: 10px;
+  text-align: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.input-container button {
+  width: 85%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.input-container button:hover {
+  background-color: #45a049;
+}
+
+.block-option {
+  background-color: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: grab;
+  padding: 10px;
+  user-select: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.block-option:hover {
+  background-color: #bbb;
+}
+
+#workspace {
+  background-color: #e0e0e0;
+  position: relative;
+  padding: 0px;
+  overflow: auto;
+  border: 2px dashed #aaa;
+  transform-origin: top left;
+}
+
+/* Mengubah tampilan scrollbar vertikal */
+#workspace::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+  height: 8px;
+}
+
+/* Mengubah tampilan track (bagian latar belakang scrollbar) */
+#workspace::-webkit-scrollbar-track {
+  background: #e0e0e0; /* Warna latar belakang track scrollbar */
+  border-radius: 4px; /* Membuat track menjadi melengkung */
+}
+
+/* Mengubah tampilan thumb (bagian yang digeser) */
+#workspace::-webkit-scrollbar-thumb {
+  background: #888; /* Warna thumb scrollbar */
+  border-radius: 4px; /* Membuat thumb melengkung */
+  border: 2px solid #f4f4f9; /* Membuat border tipis agar thumb terlihat lebih elegan */
+}
+
+/* Menambahkan efek hover pada thumb scrollbar */
+#workspace::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna lebih gelap saat hover */
+}
+
+#workspace h2 {
+  text-align: center;
+  z-index: 1000;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+  position: fixed; /* Membuat elemen tetap di posisi viewport */
+  top: 10px; /* Posisi dari atas viewport */
+  width: 72%; /* Membuat elemen menutupi lebar viewport */
+}
+
+#workspace-content {
+  transform-origin: top left;
+  transition: transform 0.2s ease-in-out;
+  position: relative;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+#trash-bin {
+  position: fixed;
+  right: 35px;
+  bottom: 35px;
+  z-index: 1000;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ff0000;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+#trash-bin.active {
+  opacity: 1;
+}
+
+.block {
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: grab;
+  transition: transform 0.2s;
+}
+
+.block:active {
+  cursor: grabbing;
+  transform: absolute;
+}
+
+.content-item {
+  display: none;
+  width: 100%;
+  user-select: none; /* Mencegah seleksi teks */
+  -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
+  -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
+  -moz-user-select: none; /* Dukungan untuk Firefox */
+}
+
+.content-item.active {
+  display: block;
+}
+
+html {
+  scroll-behavior: smooth; /* Optional for smoother scrolling */
+}
+
+#zoom-controls {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+#zoom-controls button {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#zoom-controls button:hover {
+  background-color: #45a049;
+}

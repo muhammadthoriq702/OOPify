@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/Logo OOPify.png" />
+    <title>OOPify - Block Programming</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <img src="images/Logo OOPify1.png" alt="Logo" class="sidebar-logo" />
+
+        <ul>
+          <li onclick="showContent('class'); changeColor(this)">
+            <img src="images/Menuclass.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('dataType'); changeColor(this)">
+            <img src="images/Menutipedata.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('connector'); changeColor(this)">
+            <img src="images/Menuconnector.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('constructor'); changeColor(this)">
+            <img src="images/Menuconstructor.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('method'); changeColor(this)">
+            <img src="images/Menumethod.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('modifier'); changeColor(this)">
+            <img src="images/Menumodifier.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('operational'); changeColor(this)">
+            <img src="images/Menuoperational.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('control'); changeColor(this)">
+            <img src="images/Menucontrol.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('miniclass'); changeColor(this)">
+            <img src="images/Menuminiclass.png" alt="Logo" class="sidebar-logo" />
+          </li>
+          <li onclick="showContent('inputName'); changeColor(this)">
+            <img src="images/Menuinput.png" alt="Logo" class="sidebar-logo" />
+          </li>
+        </ul>
+      </div>
+
+      <!-- Panel Kiri untuk pilihan blok -->
+      <div class="content">
+        <div id="class" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <h4>Class</h4>
+          <div class="block-option-class" draggable="true" data-type="class" data-img="Superclass.png" data-width="143" data-height="400"></div>
+          <h4>Main Class</h4>
+          <div class="block-option-class" draggable="true" data-type="class" data-img="Mainclass.png" data-width="150" data-height="400"></div>
+        </div>
+
+        <div id="dataType" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="datatype.png" data-width="80" data-height="35"></div>
+          <h4>int</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Int.png" data-width="20" data-height="20"></div>
+          <h4>char</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Char.png" data-width="20" data-height="20"></div>
+          <h4>float</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Float.png" data-width="20" data-height="20"></div>
+          <h4>double</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Double.png" data-width="20" data-height="20"></div>
+          <h4>String</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_String.png" data-width="20" data-height="20"></div>
+          <h4>array</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Array.png" data-width="20" data-height="20"></div>
+          <h4>bool</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Bool.png" data-width="20" data-height="20"></div>
+          <h4>void</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Void.png" data-width="20" data-height="20"></div>
+          <h4>long</h4>
+          <div class="block-option-datatype" draggable="true" data-type="datatype" data-img="TypeData_Long.png" data-width="20" data-height="20"></div>
+        </div>
+
+        <div id="connector" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <h4>Connector_1</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_1.png" data-width="140" data-height="20"></div>
+          <h4>Connector_2</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_2.png" data-width="89" data-height="20"></div>
+          <h4>Connector_3</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_3.png" data-width="155" data-height="20"></div>
+          <h4>Connector_4</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_4.png" data-width="67" data-height="20"></div>
+          <h4>Connector_5</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_5.png" data-width="67" data-height="20"></div>
+          <h4>Connector_6</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_6.png" data-width="112" data-height="20"></div>
+          <h4>Connector_7</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_7.png" data-width="138" data-height="20"></div>
+          <h4>Connector_8</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_8.png" data-width="36" data-height="30"></div>
+          <h4>Connector_9</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_9.png" data-width="34" data-height="30"></div>
+          <h4>Connector_New_1</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_New_1.png" data-width="138" data-height="20"></div>
+          <h4>Connector_New_2</h4>
+          <div class="block-option-connector" draggable="true" data-type="connector" data-img="Connector_New_2.png" data-width="138" data-height="20"></div>
+        </div>
+
+        <div id="constructor" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-constructor" draggable="true" data-type="constructor" data-img="Constructor1.png" data-width="160" data-height="170"></div>
+          <div class="block-option-constructor" draggable="true" data-type="constructor" data-img="Constructor2.png" data-width="160" data-height="170"></div>
+          <div class="block-option-constructor" draggable="true" data-type="constructor" data-img="Constructor_Sambungan.png" data-width="121" data-height="20"></div>
+        </div>
+
+        <div id="method" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="MethodMain.png" data-width="160" data-height="170"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method1.png" data-width="160" data-height="170"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method2.png" data-width="160" data-height="170"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method3.png" data-width="160" data-height="170"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method4.png" data-width="160" data-height="170"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Sambungan.png" data-width="120" data-height="20"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Return.png" data-width="72" data-height="20"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_This.png" data-width="72" data-height="30"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Get.png" data-width="72" data-height="30"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Set.png" data-width="72" data-height="30"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Print.png" data-width="207" data-height="30"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Printplus.png" data-width="192" data-height="20"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Scan.png" data-width="207" data-height="30"></div>
+          <div class="block-option-method" draggable="true" data-type="method" data-img="Method_Scanplus.png" data-width="192" data-height="20"></div>
+        </div>
+
+        <div id="modifier" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <h4>Private</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Private.png" data-width="15" data-height="15"></div>
+          <h4>Protected</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Protected.png" data-width="15" data-height="15"></div>
+          <h4>Public</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Public.png" data-width="15" data-height="15"></div>
+          <h4>Final</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Final.png" data-width="15" data-height="15"></div>
+          <h4>Abstract</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Abstract.png" data-width="15" data-height="15"></div>
+          <h4>Static</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_Static.png" data-width="15" data-height="15"></div>
+          <h4>No Modifier</h4>
+          <div class="block-option-modifier" draggable="true" data-type="modifier" data-img="Modifier_NoModifier.png" data-width="15" data-height="15"></div>
+          <!-- Other blocks -->
+        </div>
+
+        <div id="operational" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-operational" draggable="true" data-type="operational" data-img="Operational_Plus.png" data-width="80" data-height="20"></div>
+          <div class="block-option-operational" draggable="true" data-type="operational" data-img="Operational_And.png" data-width="80" data-height="20"></div>
+          <div class="block-option-operational" draggable="true" data-type="operational" data-img="Operational_Aritmatika.png" data-width="160" data-height="30"></div>
+        </div>
+
+        <div id="condition" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_If.png" data-width="200" data-height="170"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_IfElse.png" data-width="200" data-height="170"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_ElseIf.png" data-width="200" data-height="240"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_Break.png" data-width="75" data-height="30"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_Continue.png" data-width="75" data-height="30"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_For.png" data-width="200" data-height="170"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_While.png" data-width="200" data-height="170"></div>
+          <div class="block-option-condition" draggable="true" data-type="condition" data-img="Condition_DoWhile.png" data-width="200" data-height="170"></div>
+        </div>
+
+        <div id="miniclass" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini1.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini2.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini3.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini4.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini5.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini6.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini7.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini8.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini9.png" data-width="24" data-height="21"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Mini10.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn1.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn2.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn3.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn4.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn5.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn6.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn7.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn8.png" data-width="25" data-height="20"></div>
+          <div class="block-option-miniclass" draggable="true" data-type="miniclass" data-img="Minn9.png" data-width="25" data-height="20"></div>
+        </div>
+
+        <div id="control" class="content-item">
+          <h2>Pilihan Blok</h2>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_IfElse.png" data-width="160" data-height="170"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_ElseIf.png" data-width="160" data-height="240"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_If.png" data-width="200" data-height="170"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_Break.png" data-width="80" data-height="28"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_Continue.png" data-width="80" data-height="28"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_For.png" data-width="160" data-height="170"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_DoWhile.png" data-width="160" data-height="170"></div>
+          <div class="block-option-control" draggable="true" data-type="class" data-img="Condition_While.png" data-width="160" data-height="170"></div>
+        </div>
+
+        <div id="inputName" class="content-item">
+          <h2>Input Name</h2>
+          <div class="input-container">
+            <input type="text" id="input-name" placeholder="Input Here..." />
+            <button onclick="createInputBlock()">Add Name</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workspace Tengah -->
+      <div id="workspace">
+        <h2>Workspace</h2>
+        <div id="trash-bin">🗑️</div>
+        <div id="zoom-controls">
+          <button id="zoom-in">+</button>
+          <button id="zoom-out">-</button>
+          <button id="zoom-reset">Reset</button>
+        </div>
+        <!-- Wrapper untuk konten yang di-zoom -->
+        <div id="workspace-content">
+          <!-- Konten lain yang ingin di-zoom -->
+          <div class="drop">.</div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@interactjs/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@interactjs/interactjs/index.min.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
