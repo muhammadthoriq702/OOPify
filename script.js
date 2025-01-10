@@ -4,91 +4,11 @@ let offsetX = 0;
 let offsetY = 0;
 const trashBin = document.getElementById("trash-bin");
 
-const SNAP_OFFSETS = {
-  right: { x: -11, y: 0 },
-  bottom: { x: 0, y: -16 },
-};
+const SNAP_DISTANCE = 10;
+
 
 let zoomLevel = 1;
-// Solution: Differentiated snapping behavior for different block types
 
-// Solution: Differentiated snapping behavior for different block types based on source and target pairs
-
-const SNAP_RULES = {
-  class: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  datatype: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  connector: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  constructor: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  method: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  operational: {
-    operational: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  control: {
-    datatype: { x: 15, y: 20 },
-    connector: { x: 10, y: 10 },
-    constructor: { x: 15, y: 20 },
-    method: { x: 15, y: 20 },
-    modifier: { x: 15, y: 20 },
-    operational: { x: 15, y: 20 },
-    control: { x: 15, y: 20 },
-    miniclass: { x: 15, y: 20 },
-    //inputan: { x: 15, y: 20 }, //ini masih perlu dipikirin atau gausah sama sekali aja
-  },
-  // Add more rules as needed
-};
-
-// Override snapping logic in existing mouseup event
 document.addEventListener("mouseup", () => {
   if (currentDraggedBlock) {
     const workspace = document.getElementById("workspace-content");
@@ -108,30 +28,40 @@ document.addEventListener("mouseup", () => {
 
     for (const block of blocks) {
       if (block === currentDraggedBlock) continue;
-
-      const sourceType = currentDraggedBlock.className.split("-")[1]; // Extract source block type
-      const targetType = block.className.split("-")[1]; // Extract target block type
-
-      const snapConfig = SNAP_RULES[sourceType]?.[targetType] || { x: 10, y: 10 }; // Fallback if no rule
-
+    
+      const blockConfig = blocksInWorkspace.find(b => b.element === block);
+      const currentConfig = blocksInWorkspace.find(b => b.element === currentDraggedBlock);
+    
+      if (!blockConfig.snapConfig) continue;
+    
       const blockRect = block.getBoundingClientRect();
+      const draggedRect = currentDraggedBlock.getBoundingClientRect();
+    
       const distanceRight = Math.abs(draggedRect.left - blockRect.right);
       const distanceBottom = Math.abs(draggedRect.top - blockRect.bottom);
-
-      if (distanceRight <= snapConfig.x && draggedRect.bottom > blockRect.top && draggedRect.top < blockRect.bottom) {
-        currentDraggedBlock.style.left = `${block.offsetLeft + block.offsetWidth}px`;
-        currentDraggedBlock.style.top = `${block.offsetTop}px`;
+    
+      let snapped = false;
+    
+      // Snap to the right if enabled
+      if (blockConfig.snapConfig.right && distanceRight <= SNAP_DISTANCE &&
+          draggedRect.bottom > blockRect.top && draggedRect.top < blockRect.bottom) {
+        currentDraggedBlock.style.left = `${block.offsetLeft + block.offsetWidth + blockConfig.snapConfig.offsets.right.x}px`;
+        currentDraggedBlock.style.top = `${block.offsetTop + blockConfig.snapConfig.offsets.right.y}px`;
         snapped = true;
-        break;
       }
-
-      if (distanceBottom <= snapConfig.y && draggedRect.right > blockRect.left && draggedRect.left < blockRect.right) {
-        currentDraggedBlock.style.left = `${block.offsetLeft}px`;
-        currentDraggedBlock.style.top = `${block.offsetTop + block.offsetHeight}px`;
+    
+      // Snap to the bottom if enabled
+      if (blockConfig.snapConfig.bottom && distanceBottom <= SNAP_DISTANCE &&
+          draggedRect.right > blockRect.left && draggedRect.left < blockRect.right) {
+        currentDraggedBlock.style.left = `${block.offsetLeft + blockConfig.snapConfig.offsets.bottom.x}px`;
+        currentDraggedBlock.style.top = `${block.offsetTop + block.offsetHeight + blockConfig.snapConfig.offsets.bottom.y}px`;
         snapped = true;
-        break;
       }
+    
+      if (snapped) break;
     }
+    
+    
 
     if (!snapped) {
       const left = parseFloat(currentDraggedBlock.style.left) || 0;
@@ -146,7 +76,7 @@ document.addEventListener("mouseup", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   showContent("class");
-
+  
   // Set the first item to active initially
   const sidebarItems = document.querySelectorAll(".sidebar ul li");
   if (sidebarItems.length > 0) {
@@ -180,28 +110,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("workspace-content").addEventListener("drop", (event) => {
     event.preventDefault();
-
+  
     const type = event.dataTransfer.getData("type");
     const img = event.dataTransfer.getData("img");
     const width = event.dataTransfer.getData("width");
     const height = event.dataTransfer.getData("height");
-
+  
+    const blockOption = document.querySelector(`[data-img="${img}"]`);
+  
+    const snapConfig = {
+      right: blockOption.dataset.snapRight === "true",
+      bottom: blockOption.dataset.snapBottom === "true",
+      offsets: {
+        right: {
+          x: parseFloat(blockOption.dataset.snapRightX) || 0,
+          y: parseFloat(blockOption.dataset.snapRightY) || 0,
+        },
+        bottom: {
+          x: parseFloat(blockOption.dataset.snapBottomX) || 0,
+          y: parseFloat(blockOption.dataset.snapBottomY) || 0,
+        },
+      },
+    };
+  
     const block = createPNGBlock(type, img, width, height);
     const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
     block.style.top = `${(event.clientY - workspaceRect.top + window.scrollY) / zoomLevel}px`;
     block.style.left = `${(event.clientX - workspaceRect.left + window.scrollX) / zoomLevel}px`;
-
+  
     blocksInWorkspace.push({
       element: block,
       type,
       content: "",
       children: [],
+      snapConfig,
     });
+  
     document.getElementById("workspace-content").appendChild(block);
   });
+  
+  
 
   document.getElementById("create-input-block").addEventListener("click", createInputBlock);
 });
+
 
 function createPNGBlock(type, img, width, height) {
   const block = document.createElement("div");
