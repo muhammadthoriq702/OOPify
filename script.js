@@ -6,7 +6,6 @@ const trashBin = document.getElementById("trash-bin");
 
 const SNAP_DISTANCE = 10;
 
-
 let zoomLevel = 1;
 
 document.addEventListener("mouseup", () => {
@@ -15,9 +14,16 @@ document.addEventListener("mouseup", () => {
     const trashBinRect = trashBin.getBoundingClientRect();
     const draggedRect = currentDraggedBlock.getBoundingClientRect();
 
-    if (draggedRect.right > trashBinRect.left && draggedRect.left < trashBinRect.right && draggedRect.bottom > trashBinRect.top && draggedRect.top < trashBinRect.bottom) {
+    if (
+      draggedRect.right > trashBinRect.left &&
+      draggedRect.left < trashBinRect.right &&
+      draggedRect.bottom > trashBinRect.top &&
+      draggedRect.top < trashBinRect.bottom
+    ) {
       currentDraggedBlock.remove();
-      blocksInWorkspace = blocksInWorkspace.filter((block) => block.element !== currentDraggedBlock);
+      blocksInWorkspace = blocksInWorkspace.filter(
+        (block) => block.element !== currentDraggedBlock
+      );
       trashBin.classList.remove("active");
       currentDraggedBlock = null;
       return;
@@ -28,40 +34,100 @@ document.addEventListener("mouseup", () => {
 
     for (const block of blocks) {
       if (block === currentDraggedBlock) continue;
-    
-      const blockConfig = blocksInWorkspace.find(b => b.element === block);
-      const currentConfig = blocksInWorkspace.find(b => b.element === currentDraggedBlock);
-    
+
+      const blockConfig = blocksInWorkspace.find((b) => b.element === block);
+      const currentConfig = blocksInWorkspace.find(
+        (b) => b.element === currentDraggedBlock
+      );
+
       if (!blockConfig.snapConfig) continue;
-    
+
       const blockRect = block.getBoundingClientRect();
       const draggedRect = currentDraggedBlock.getBoundingClientRect();
-    
+
       const distanceRight = Math.abs(draggedRect.left - blockRect.right);
       const distanceBottom = Math.abs(draggedRect.top - blockRect.bottom);
-    
+
       let snapped = false;
-    
+      // Extract the main part of the connector before the hyphen
+      const currentConnectorMain =
+        currentConfig.snapConfig.connectorLeft?.split("-")[0];
+      const blockConnectorMain =
+        blockConfig.snapConfig.connectorRight?.split("-")[0];
+      console.log(currentConnectorMain, blockConnectorMain);
       // Snap to the right if enabled
-      if (blockConfig.snapConfig.right && distanceRight <= SNAP_DISTANCE &&
-          draggedRect.bottom > blockRect.top && draggedRect.top < blockRect.bottom) {
-        currentDraggedBlock.style.left = `${block.offsetLeft + block.offsetWidth + blockConfig.snapConfig.offsets.right.x}px`;
-        currentDraggedBlock.style.top = `${block.offsetTop + blockConfig.snapConfig.offsets.right.y}px`;
-        snapped = true;
+      if (currentConnectorMain === blockConnectorMain) {
+        if (
+          currentConfig.snapConfig.connectorLeft?.split("-")[1] === "punya" &&
+          blockConfig.snapConfig.connectorRight?.split("-")[1] === "butuh"
+        ) {
+          if (
+            blockConfig.snapConfig.right &&
+            distanceRight <= SNAP_DISTANCE &&
+            draggedRect.bottom > blockRect.top &&
+            draggedRect.top < blockRect.bottom
+          ) {
+            currentDraggedBlock.style.left = `${
+              block.offsetLeft +
+              block.offsetWidth +
+              blockConfig.snapConfig.offsets.right.x
+            }px`;
+            currentDraggedBlock.style.top = `${
+              block.offsetTop + blockConfig.snapConfig.offsets.right.y
+            }px`;
+            snapped = true;
+          }
+        }
       }
-    
       // Snap to the bottom if enabled
-      if (blockConfig.snapConfig.bottom && distanceBottom <= SNAP_DISTANCE &&
-          draggedRect.right > blockRect.left && draggedRect.left < blockRect.right) {
-        currentDraggedBlock.style.left = `${block.offsetLeft + blockConfig.snapConfig.offsets.bottom.x}px`;
-        currentDraggedBlock.style.top = `${block.offsetTop + block.offsetHeight + blockConfig.snapConfig.offsets.bottom.y}px`;
-        snapped = true;
+      console.log(blockConfig.snapConfig);
+      const currentConnectorOther =
+        currentConfig.snapConfig.connectorTop?.split("-")[0];
+      const blockConnectorOther =
+        blockConfig.snapConfig.connectorBottom?.split("-")[0];
+      const blockConnectorOtherb =
+        blockConfig.snapConfig.connectorOtherBottom?.split("-")[0];
+
+      if (currentConnectorOther === blockConnectorOther) {
+        if (
+          blockConfig.snapConfig.bottom &&
+          distanceBottom <= SNAP_DISTANCE &&
+          draggedRect.right > blockRect.left &&
+          draggedRect.left < blockRect.right
+        ) {
+          console.log("snap bottom");
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.bottom.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop +
+            block.offsetHeight +
+            blockConfig.snapConfig.offsets.bottom.y
+          }px`;
+          snapped = true;
+        }
       }
-    
+      if (currentConnectorOther === blockConnectorOtherb) {
+        if (
+          blockConfig.snapConfig.otherBottom &&
+          distanceBottom <= SNAP_DISTANCE &&
+          draggedRect.right > blockRect.left &&
+          draggedRect.left < blockRect.right
+        ) {
+          console.log("snap bottom");
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.otherBottom.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop +
+            block.offsetHeight +
+            blockConfig.snapConfig.offsets.otherBottom.y
+          }px`;
+          snapped = true;
+        }
+      }
       if (snapped) break;
     }
-    
-    
 
     if (!snapped) {
       const left = parseFloat(currentDraggedBlock.style.left) || 0;
@@ -76,7 +142,7 @@ document.addEventListener("mouseup", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   showContent("class");
-  
+
   // Set the first item to active initially
   const sidebarItems = document.querySelectorAll(".sidebar ul li");
   if (sidebarItems.length > 0) {
@@ -93,67 +159,95 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document.querySelectorAll("[class^='block-option']").forEach((blockOption) => {
-    const img = blockOption.dataset.img;
-    blockOption.style.backgroundImage = `url('images/${img}')`;
+  document
+    .querySelectorAll("[class^='block-option']")
+    .forEach((blockOption) => {
+      const img = blockOption.dataset.img;
+      blockOption.style.backgroundImage = `url('images/${img}')`;
 
-    blockOption.addEventListener("dragstart", (event) => {
-      ["type", "img", "width", "height"].forEach((key) => {
-        event.dataTransfer.setData(key, blockOption.dataset[key]);
+      blockOption.addEventListener("dragstart", (event) => {
+        [
+          "type",
+          "img",
+          "width",
+          "height",
+          "connectorRight",
+          "connectorLeft",
+        ].forEach((key) => {
+          event.dataTransfer.setData(key, blockOption.dataset[key]);
+        });
       });
     });
-  });
 
-  document.getElementById("workspace-content").addEventListener("dragover", (event) => {
-    event.preventDefault();
-  });
-
-  document.getElementById("workspace-content").addEventListener("drop", (event) => {
-    event.preventDefault();
-  
-    const type = event.dataTransfer.getData("type");
-    const img = event.dataTransfer.getData("img");
-    const width = event.dataTransfer.getData("width");
-    const height = event.dataTransfer.getData("height");
-  
-    const blockOption = document.querySelector(`[data-img="${img}"]`);
-  
-    const snapConfig = {
-      right: blockOption.dataset.snapRight === "true",
-      bottom: blockOption.dataset.snapBottom === "true",
-      offsets: {
-        right: {
-          x: parseFloat(blockOption.dataset.snapRightX) || 0,
-          y: parseFloat(blockOption.dataset.snapRightY) || 0,
-        },
-        bottom: {
-          x: parseFloat(blockOption.dataset.snapBottomX) || 0,
-          y: parseFloat(blockOption.dataset.snapBottomY) || 0,
-        },
-      },
-    };
-  
-    const block = createPNGBlock(type, img, width, height);
-    const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
-    block.style.top = `${(event.clientY - workspaceRect.top + window.scrollY) / zoomLevel}px`;
-    block.style.left = `${(event.clientX - workspaceRect.left + window.scrollX) / zoomLevel}px`;
-  
-    blocksInWorkspace.push({
-      element: block,
-      type,
-      content: "",
-      children: [],
-      snapConfig,
+  document
+    .getElementById("workspace-content")
+    .addEventListener("dragover", (event) => {
+      event.preventDefault();
     });
-  
-    document.getElementById("workspace-content").appendChild(block);
-  });
-  
-  
 
-  document.getElementById("create-input-block").addEventListener("click", createInputBlock);
+  document
+    .getElementById("workspace-content")
+    .addEventListener("drop", (event) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData("type");
+      const img = event.dataTransfer.getData("img");
+      const width = event.dataTransfer.getData("width");
+      const height = event.dataTransfer.getData("height");
+
+      const blockOption = document.querySelector(`[data-img="${img}"]`);
+
+      const snapConfig = {
+        right: blockOption.dataset.snapRight === "true",
+        bottom: blockOption.dataset.snapBottom === "true",
+        otherBottom: blockOption.dataset.otherBottom === "true",
+        offsets: {
+          right: {
+            x: parseFloat(blockOption.dataset.snapRightX) || 0,
+            y: parseFloat(blockOption.dataset.snapRightY) || 0,
+          },
+          bottom: {
+            x: parseFloat(blockOption.dataset.snapBottomX) || 0,
+            y: parseFloat(blockOption.dataset.snapBottomY) || 0,
+          },
+          otherBottom: {
+            x: parseFloat(blockOption.dataset.otherBottomX) || 0,
+            y: parseFloat(blockOption.dataset.otherBottomY) || 0,
+          },
+        },
+        connectorRight: blockOption.dataset.connectorRight,
+        connectorLeft: blockOption.dataset.connectorLeft,
+        connectorBottom: blockOption.dataset.connectorBottom,
+        connectorOtherBottom: blockOption.dataset.connectorOtherb,
+        connectorTop: blockOption.dataset.connectorTop,
+      };
+
+      const block = createPNGBlock(type, img, width, height);
+      const workspaceRect = document
+        .getElementById("workspace-content")
+        .getBoundingClientRect();
+      block.style.top = `${
+        (event.clientY - workspaceRect.top + window.scrollY) / zoomLevel
+      }px`;
+      block.style.left = `${
+        (event.clientX - workspaceRect.left + window.scrollX) / zoomLevel
+      }px`;
+
+      blocksInWorkspace.push({
+        element: block,
+        type,
+        content: "",
+        children: [],
+        snapConfig,
+      });
+
+      document.getElementById("workspace-content").appendChild(block);
+    });
+
+  document
+    .getElementById("create-input-block")
+    .addEventListener("click", createInputBlock);
 });
-
 
 function createPNGBlock(type, img, width, height) {
   const block = document.createElement("div");
@@ -164,7 +258,9 @@ function createPNGBlock(type, img, width, height) {
 
   block.addEventListener("mousedown", (event) => {
     currentDraggedBlock = block;
-    const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
+    const workspaceRect = document
+      .getElementById("workspace-content")
+      .getBoundingClientRect();
     offsetX = event.clientX - block.getBoundingClientRect().left;
     offsetY = event.clientY - block.getBoundingClientRect().top;
     block.style.cursor = "grabbing";
@@ -204,13 +300,17 @@ function createInputBlock() {
   block.style.paddingRight = "5px";
   block.style.zIndex = "1000";
 
-  const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
+  const workspaceRect = document
+    .getElementById("workspace-content")
+    .getBoundingClientRect();
   block.style.top = `${10 / zoomLevel}px`;
   block.style.left = `${10 / zoomLevel}px`;
 
   block.addEventListener("mousedown", (event) => {
     currentDraggedBlock = block;
-    const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
+    const workspaceRect = document
+      .getElementById("workspace-content")
+      .getBoundingClientRect();
     offsetX = event.clientX - block.getBoundingClientRect().left;
     offsetY = event.clientY - block.getBoundingClientRect().top;
     block.style.cursor = "grabbing";
@@ -241,7 +341,9 @@ function createInputBlock() {
   resizeHandle.addEventListener("mousedown", (e) => {
     e.stopPropagation();
     let isResizing = true;
-    const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
+    const workspaceRect = document
+      .getElementById("workspace-content")
+      .getBoundingClientRect();
     const initialWidth = block.offsetWidth * zoomLevel;
     const initialMouseX = (e.clientX - workspaceRect.left) / zoomLevel;
 
@@ -270,7 +372,9 @@ function createInputBlock() {
 
 document.addEventListener("mousemove", (event) => {
   if (currentDraggedBlock) {
-    const workspaceRect = document.getElementById("workspace-content").getBoundingClientRect();
+    const workspaceRect = document
+      .getElementById("workspace-content")
+      .getBoundingClientRect();
     const x = event.clientX - workspaceRect.left - offsetX;
     const y = event.clientY - workspaceRect.top - offsetY;
 
@@ -280,7 +384,12 @@ document.addEventListener("mousemove", (event) => {
     const trashBinRect = trashBin.getBoundingClientRect();
     const blockRect = currentDraggedBlock.getBoundingClientRect();
 
-    if (blockRect.right > trashBinRect.left && blockRect.left < trashBinRect.right && blockRect.bottom > trashBinRect.top && blockRect.top < trashBinRect.bottom) {
+    if (
+      blockRect.right > trashBinRect.left &&
+      blockRect.left < trashBinRect.right &&
+      blockRect.bottom > trashBinRect.top &&
+      blockRect.top < trashBinRect.bottom
+    ) {
       trashBin.classList.add("active");
     } else {
       trashBin.classList.remove("active");
@@ -289,21 +398,27 @@ document.addEventListener("mousemove", (event) => {
 });
 
 function showContent(type) {
-  document.querySelectorAll(".content-item").forEach((item) => item.classList.remove("active"));
+  document
+    .querySelectorAll(".content-item")
+    .forEach((item) => item.classList.remove("active"));
   document.getElementById(type).classList.add("active");
 }
 
 document.getElementById("zoom-in").addEventListener("click", () => {
   if (zoomLevel < 2) {
     zoomLevel += 0.1;
-    document.getElementById("workspace-content").style.transform = `scale(${zoomLevel})`;
+    document.getElementById(
+      "workspace-content"
+    ).style.transform = `scale(${zoomLevel})`;
   }
 });
 
 document.getElementById("zoom-out").addEventListener("click", () => {
   if (zoomLevel > 0.5) {
     zoomLevel -= 0.1;
-    document.getElementById("workspace-content").style.transform = `scale(${zoomLevel})`;
+    document.getElementById(
+      "workspace-content"
+    ).style.transform = `scale(${zoomLevel})`;
   }
 });
 
