@@ -40,7 +40,13 @@ document.addEventListener("mouseup", () => {
         (b) => b.element === currentDraggedBlock
       );
 
-      if (!blockConfig.snapConfig) continue;
+      if (
+        !blockConfig ||
+        !blockConfig.snapConfig ||
+        !currentConfig ||
+        !currentConfig.snapConfig
+      )
+        continue;
 
       const blockRect = block.getBoundingClientRect();
       const draggedRect = currentDraggedBlock.getBoundingClientRect();
@@ -49,12 +55,13 @@ document.addEventListener("mouseup", () => {
       const distanceBottom = Math.abs(draggedRect.top - blockRect.bottom);
 
       let snapped = false;
+
       // Extract the main part of the connector before the hyphen
       const currentConnectorMain =
-        currentConfig.snapConfig.connectorLeft?.split("-")[0];
+        currentConfig.snapConfig.connectorLeft?.split("-")[0] || "";
       const blockConnectorMain =
-        blockConfig.snapConfig.connectorRight?.split("-")[0];
-      console.log(currentConnectorMain, blockConnectorMain);
+        blockConfig.snapConfig.connectorRight?.split("-")[0] || "";
+
       // Snap to the right if enabled
       if (currentConnectorMain === blockConnectorMain) {
         if (
@@ -79,8 +86,8 @@ document.addEventListener("mouseup", () => {
           }
         }
       }
+
       // Snap to the bottom if enabled
-      console.log(blockConfig.snapConfig);
       const currentConnectorOther =
         currentConfig.snapConfig.connectorTop?.split("-")[0];
       const blockConnectorOther =
@@ -95,7 +102,6 @@ document.addEventListener("mouseup", () => {
           draggedRect.right > blockRect.left &&
           draggedRect.left < blockRect.right
         ) {
-          console.log("snap bottom");
           currentDraggedBlock.style.left = `${
             block.offsetLeft + blockConfig.snapConfig.offsets.bottom.x
           }px`;
@@ -114,7 +120,6 @@ document.addEventListener("mouseup", () => {
           draggedRect.right > blockRect.left &&
           draggedRect.left < blockRect.right
         ) {
-          console.log("snap bottom");
           currentDraggedBlock.style.left = `${
             block.offsetLeft + blockConfig.snapConfig.offsets.otherBottom.x
           }px`;
@@ -126,6 +131,7 @@ document.addEventListener("mouseup", () => {
           snapped = true;
         }
       }
+
       if (snapped) break;
     }
 
