@@ -432,3 +432,8 @@ document.getElementById("zoom-reset").addEventListener("click", () => {
   zoomLevel = 1;
   document.getElementById("workspace-content").style.transform = "scale(1)";
 });
+
+window.addEventListener("beforeunload", function (event) {
+  event.preventDefault();
+  event.returnValue = "";
+});
