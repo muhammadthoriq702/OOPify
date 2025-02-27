@@ -87,6 +87,83 @@ document.addEventListener("mouseup", () => {
         }
       }
 
+      // Snap to the middle if enabled
+      const distanceMiddleX = Math.abs(draggedRect.left - blockRect.left);
+      const distanceMiddleY = Math.abs(
+        draggedRect.top -
+          (blockRect.top + blockRect.height / 2 - draggedRect.height / 2)
+      );
+
+      const currentConnectorMiddle =
+        currentConfig.snapConfig.connectorMiddle?.split("-")[0];
+      const blockConnectorMiddle =
+        blockConfig.snapConfig.connectorMiddle?.split("-")[0];
+
+      if (currentConnectorMiddle === blockConnectorMiddle) {
+        if (
+          blockConfig.snapConfig.middle &&
+          distanceMiddleX <= SNAP_DISTANCE &&
+          distanceMiddleY <= SNAP_DISTANCE
+        ) {
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.middle.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop +
+            block.offsetHeight / 2 -
+            draggedRect.height / 2 +
+            blockConfig.snapConfig.offsets.middle.y
+          }px`;
+          snapped = true;
+        }
+      }
+
+      // Snap to the top if enabled
+      const currentConnectorBottom =
+        currentConfig.snapConfig.connectorBottom?.split("-")[0];
+      const blockConnectorTop =
+        blockConfig.snapConfig.connectorTop?.split("-")[0];
+      const blockConnectorOtherTop =
+        blockConfig.snapConfig.connectorOtherTop?.split("-")[0];
+
+      if (currentConnectorBottom === blockConnectorTop) {
+        if (
+          blockConfig.snapConfig.top &&
+          distanceBottom <= SNAP_DISTANCE &&
+          draggedRect.right > blockRect.left &&
+          draggedRect.left < blockRect.right
+        ) {
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.top.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop -
+            draggedRect.height +
+            blockConfig.snapConfig.offsets.top.y
+          }px`;
+          snapped = true;
+        }
+      }
+
+      if (currentConnectorBottom === blockConnectorOtherTop) {
+        if (
+          blockConfig.snapConfig.otherTop &&
+          distanceBottom <= SNAP_DISTANCE &&
+          draggedRect.right > blockRect.left &&
+          draggedRect.left < blockRect.right
+        ) {
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.otherTop.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop -
+            draggedRect.height +
+            blockConfig.snapConfig.offsets.otherTop.y
+          }px`;
+          snapped = true;
+        }
+      }
+
       // Snap to the bottom if enabled
       const currentConnectorOther =
         currentConfig.snapConfig.connectorTop?.split("-")[0];
@@ -207,6 +284,9 @@ document.addEventListener("DOMContentLoaded", () => {
         right: blockOption.dataset.snapRight === "true",
         bottom: blockOption.dataset.snapBottom === "true",
         otherBottom: blockOption.dataset.otherBottom === "true",
+        top: blockOption.dataset.snapTop === "true", // Tambahkan
+        otherTop: blockOption.dataset.snapOtherTop === "true",
+        middle: blockOption.dataset.snapMiddle === "true",
         offsets: {
           right: {
             x: parseFloat(blockOption.dataset.snapRightX) || 0,
@@ -220,12 +300,26 @@ document.addEventListener("DOMContentLoaded", () => {
             x: parseFloat(blockOption.dataset.otherBottomX) || 0,
             y: parseFloat(blockOption.dataset.otherBottomY) || 0,
           },
+          top: {
+            x: parseFloat(blockOption.dataset.snapTopX) || 0,
+            y: parseFloat(blockOption.dataset.snapTopY) || 0,
+          },
+          otherTop: {
+            x: parseFloat(blockOption.dataset.snapOtherTopX) || 0,
+            y: parseFloat(blockOption.dataset.snapOtherTopY) || 0,
+          },
+          middle: {
+            x: parseFloat(blockOption.dataset.snapMiddleX) || 0,
+            y: parseFloat(blockOption.dataset.snapMiddleY) || 0,
+          },
         },
         connectorRight: blockOption.dataset.connectorRight,
         connectorLeft: blockOption.dataset.connectorLeft,
         connectorBottom: blockOption.dataset.connectorBottom,
         connectorOtherBottom: blockOption.dataset.connectorOtherb,
+        connectorMiddle: blockOption.dataset.connectorMiddle,
         connectorTop: blockOption.dataset.connectorTop,
+        connectorOtherTop: blockOption.dataset.connectorOtherTop,
       };
 
       const block = createPNGBlock(type, img, width, height);
