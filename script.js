@@ -88,11 +88,12 @@ document.addEventListener("mouseup", () => {
       }
 
       // Snap to the middle if enabled
-      const distanceMiddleX = Math.abs(draggedRect.left - blockRect.left);
+      const distanceMiddleX = Math.abs((draggedRect.left - blockRect.left));
       const distanceMiddleY = Math.abs(
         draggedRect.top -
-          (blockRect.top + blockRect.height / 2 - draggedRect.height / 2)
+        (blockRect.top + blockRect.height / 2 - draggedRect.height / 2)
       );
+      console.log(distanceMiddleX, distanceMiddleY);
 
       const currentConnectorMiddle =
         currentConfig.snapConfig.connectorMiddle?.split("-")[0];
@@ -102,8 +103,8 @@ document.addEventListener("mouseup", () => {
       if (currentConnectorMiddle === blockConnectorMiddle) {
         if (
           blockConfig.snapConfig.middle &&
-          distanceMiddleX <= SNAP_DISTANCE &&
-          distanceMiddleY <= SNAP_DISTANCE
+          distanceMiddleX - SNAP_DISTANCE <= SNAP_DISTANCE + blockConfig.snapConfig.offsets.middle.x &&
+          distanceMiddleY - SNAP_DISTANCE <= SNAP_DISTANCE
         ) {
           currentDraggedBlock.style.left = `${
             block.offsetLeft + blockConfig.snapConfig.offsets.middle.x
