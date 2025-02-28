@@ -88,10 +88,10 @@ document.addEventListener("mouseup", () => {
       }
 
       // Snap to the middle if enabled
-      const distanceMiddleX = Math.abs((draggedRect.left - blockRect.left));
+      const distanceMiddleX = Math.abs(draggedRect.left - blockRect.left);
       const distanceMiddleY = Math.abs(
         draggedRect.top -
-        (blockRect.top + blockRect.height / 2 - draggedRect.height / 2)
+          (blockRect.top + blockRect.height / 2 - draggedRect.height / 2)
       );
       console.log(distanceMiddleX, distanceMiddleY);
 
@@ -99,11 +99,14 @@ document.addEventListener("mouseup", () => {
         currentConfig.snapConfig.connectorMiddle?.split("-")[0];
       const blockConnectorMiddle =
         blockConfig.snapConfig.connectorMiddle?.split("-")[0];
+      const blockConnectorOtherMiddle =
+        blockConfig.snapConfig.connectorOtherMiddle?.split("-")[0];
 
       if (currentConnectorMiddle === blockConnectorMiddle) {
         if (
           blockConfig.snapConfig.middle &&
-          distanceMiddleX - SNAP_DISTANCE <= SNAP_DISTANCE + blockConfig.snapConfig.offsets.middle.x &&
+          distanceMiddleX - SNAP_DISTANCE <=
+            SNAP_DISTANCE + blockConfig.snapConfig.offsets.middle.x &&
           distanceMiddleY - SNAP_DISTANCE <= SNAP_DISTANCE
         ) {
           currentDraggedBlock.style.left = `${
@@ -114,6 +117,26 @@ document.addEventListener("mouseup", () => {
             block.offsetHeight / 2 -
             draggedRect.height / 2 +
             blockConfig.snapConfig.offsets.middle.y
+          }px`;
+          snapped = true;
+        }
+      }
+
+      if (currentConnectorMiddle === blockConnectorOtherMiddle) {
+        if (
+          blockConfig.snapConfig.otherMiddle &&
+          distanceMiddleX - SNAP_DISTANCE <=
+            SNAP_DISTANCE + blockConfig.snapConfig.offsets.otherMiddle.x &&
+          distanceMiddleY - SNAP_DISTANCE <= SNAP_DISTANCE
+        ) {
+          currentDraggedBlock.style.left = `${
+            block.offsetLeft + blockConfig.snapConfig.offsets.otherMiddle.x
+          }px`;
+          currentDraggedBlock.style.top = `${
+            block.offsetTop +
+            block.offsetHeight / 2 -
+            draggedRect.height / 2 +
+            blockConfig.snapConfig.offsets.otherMiddle.y
           }px`;
           snapped = true;
         }
@@ -285,9 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
         right: blockOption.dataset.snapRight === "true",
         bottom: blockOption.dataset.snapBottom === "true",
         otherBottom: blockOption.dataset.otherBottom === "true",
-        top: blockOption.dataset.snapTop === "true", // Tambahkan
+        top: blockOption.dataset.snapTop === "true", 
         otherTop: blockOption.dataset.snapOtherTop === "true",
         middle: blockOption.dataset.snapMiddle === "true",
+        otherMiddle: blockOption.dataset.snapOtherMiddle === "true",
         offsets: {
           right: {
             x: parseFloat(blockOption.dataset.snapRightX) || 0,
@@ -313,12 +337,17 @@ document.addEventListener("DOMContentLoaded", () => {
             x: parseFloat(blockOption.dataset.snapMiddleX) || 0,
             y: parseFloat(blockOption.dataset.snapMiddleY) || 0,
           },
+          otherMiddle: {
+            x: parseFloat(blockOption.dataset.snapOtherMiddleX) || 0,
+            y: parseFloat(blockOption.dataset.snapOtherMiddleY) || 0,
+          },
         },
         connectorRight: blockOption.dataset.connectorRight,
         connectorLeft: blockOption.dataset.connectorLeft,
         connectorBottom: blockOption.dataset.connectorBottom,
         connectorOtherBottom: blockOption.dataset.connectorOtherb,
         connectorMiddle: blockOption.dataset.connectorMiddle,
+        connectorOtherMiddle: blockOption.dataset.connectorOtherMiddle,
         connectorTop: blockOption.dataset.connectorTop,
         connectorOtherTop: blockOption.dataset.connectorOtherTop,
       };
