@@ -385,12 +385,78 @@ function createPNGBlock(type, img, width, height) {
   block.style.backgroundImage = `url('images/${img}')`;
   block.style.width = `${width}px`;
   block.style.height = `${height}px`;
+  block.style.position = "absolute";
+  block.style.cursor = "grab";
+  block.style.display = "flex";
+  block.style.alignItems = "center";
+  block.style.justifyContent = "center";
+  block.style.fontSize = "10px";
+  block.style.color = "black";
+  block.style.fontFamily = "Arial, sans-serif";
+  block.style.fontWeight = "bold";
 
+  function getTextPositionByType(type) {
+    switch (type) {
+      case "class":
+        return { transform: "translate(12px, -6px)" };
+      default:
+        return { transform: "translate(0px, 0px)" }; // Default tetap di tengah
+    }
+  }
+
+  // Ambil posisi berdasarkan tipe
+  const textPosition = getTextPositionByType(type);
+
+  // Tambahkan elemen span untuk nama kelas
+  const classNameSpan = document.createElement("span");
+  classNameSpan.textContent = ""; // Default name
+  classNameSpan.style.pointerEvents = "none"; // Agar tidak menghalangi drag
+  classNameSpan.style.position = "absolute"; // Buat teks bisa diposisikan secara bebas
+  classNameSpan.style.textAlign = "center"; // Posisi teks di tengah
+  classNameSpan.style.transform = textPosition.transform;
+
+  // Tambahkan input text tersembunyi untuk mengedit nama
+  const inputField = document.createElement("input");
+  inputField.type = "text";
+  inputField.style.position = "absolute";
+  inputField.style.display = "none";
+  inputField.style.fontSize = "12px";
+  inputField.style.width = "80%";
+  inputField.style.border = "none";
+  inputField.style.textAlign = "center";
+  inputField.style.fontWeight = "bold";
+
+  // Event: Klik untuk mengedit nama
+  block.addEventListener("dblclick", () => {
+    classNameSpan.style.display = "none";
+    inputField.style.display = "block";
+    inputField.value = classNameSpan.textContent;
+    inputField.focus();
+  });
+
+  // Event: Simpan nama ketika input kehilangan fokus atau Enter ditekan
+  inputField.addEventListener("blur", () => {
+    saveClassName();
+  });
+
+  inputField.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      saveClassName();
+    }
+  });
+
+  function saveClassName() {
+    classNameSpan.textContent = inputField.value.trim() || ""; // Jika kosong, tetap "Head Class"
+    inputField.style.display = "none";
+    classNameSpan.style.display = "block";
+  }
+
+  block.appendChild(classNameSpan);
+  block.appendChild(inputField);
+
+  // Drag event
   block.addEventListener("mousedown", (event) => {
     currentDraggedBlock = block;
-    const workspaceRect = document
-      .getElementById("workspace-content")
-      .getBoundingClientRect();
     offsetX = event.clientX - block.getBoundingClientRect().left;
     offsetY = event.clientY - block.getBoundingClientRect().top;
     block.style.cursor = "grabbing";
