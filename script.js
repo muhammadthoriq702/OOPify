@@ -409,7 +409,7 @@ function createPNGBlock(type, img, width, height) {
 
   // Tambahkan elemen span untuk nama kelas
   const classNameSpan = document.createElement("span");
-  classNameSpan.textContent = ""; // Default name
+  classNameSpan.textContent = "tes"; // Default name
   classNameSpan.style.pointerEvents = "none"; // Agar tidak menghalangi drag
   classNameSpan.style.position = "absolute"; // Buat teks bisa diposisikan secara bebas
   classNameSpan.style.textAlign = "center"; // Posisi teks di tengah
