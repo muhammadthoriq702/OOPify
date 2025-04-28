@@ -11,8 +11,10 @@
     <div class="container">
       <div class="sidebar">
         <img src="images/Logo OOPify.png" alt="Logo" class="sidebar-logo" />
-
         <ul>
+          <li onclick="showContent('modul'); changeColor(this)">
+            <img src="images/Menucourses.png" alt="Logo" class="sidebar-logo" />
+          </li>
           <li onclick="showContent('class'); changeColor(this)">
             <img src="images/Menuclass.png" alt="Logo" class="sidebar-logo" />
           </li>
@@ -48,6 +50,35 @@
 
       <!-- Panel Kiri untuk Blocks -->
       <div class="content">
+        <div id="modul" class="content-item">
+          <h2>Modul Ajar</h2>
+          <div id="modulButtons"></div>
+        </div>
+        
+        <!-- Modal Popup -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Modul Ajar</h3>
+            <div id="contentContainer">
+              <embed id="pdfViewer" class="pdf-container" src="" type="application/pdf" style="display: none;" />
+              <iframe 
+                id="youtubeViewer" 
+                width="100%" 
+                height="500" 
+                src="" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen 
+                style="display: none;">
+              </iframe>
+            </div>
+          </div>
+        </div>
+
+
         <div id="class" class="content-item">
           <h2>Blocks</h2>
           <h4>Main Class</h4>
@@ -209,102 +240,7 @@
             data-height="30"
             data-connector-otherb="segitiga-punya" data-other-bottom="true" data-other-bottom-y="-10" data-connector-other-bottom="segitiga-punya" data-connector-top="segitiga-butuh"
           ></div>
-          <!-- <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Plus.png"
-            data-width="80"
-            data-height="20"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Minus.png"
-            data-width="80"
-            data-height="20"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_multiply.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Divided.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Mod.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Equal.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_NotEqual.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_Sqrt.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_GreaterThan.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operasional_LessThan.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_GreaterOrEqualTo.png"
-            data-width="160"
-            data-height="30"
-          ></div>
-          <div
-            class="block-option-operational"
-            draggable="true"
-            data-type="operational"
-            data-img="Operational_LessOrEqualTo.png"
-            data-width="160"
-            data-height="30"
-          ></div> -->
+          
           <h4>Operational_And</h4>
           <div
             class="block-option-operational"
@@ -519,7 +455,7 @@
 
       <!-- Workspace Tengah -->
       <div id="workspace">
-        <h2>Workspaceee</h2>
+        <h2>Workspace</h2>
         <div id="trash-bin">🗑️</div>
         <div id="zoom-controls">
           <button id="zoom-in">+</button>

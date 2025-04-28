@@ -45,7 +45,7 @@ body {
 
 .sidebar ul li {
   font-size: 0.9em; /* Atur ukuran font menjadi lebih kecil */
-  padding: 3px;
+  padding: 1px;
   cursor: pointer;
   color: #ddd;
 }
@@ -496,7 +496,7 @@ body {
 
 #workspace h2 {
   text-align: center;
-  z-index: 1000;
+  z-index: 500;
   user-select: none; /* Mencegah seleksi teks */
   -webkit-user-select: none; /* Dukungan untuk browser Webkit seperti Chrome dan Safari */
   -ms-user-select: none; /* Dukungan untuk Internet Explorer/Edge */
@@ -520,7 +520,7 @@ body {
   position: fixed;
   right: 35px;
   bottom: 35px;
-  z-index: 1000;
+  z-index: 500;
   font-size: 24px;
   cursor: pointer;
   color: #ff0000;
@@ -570,7 +570,7 @@ html {
   position: fixed;
   top: 10px;
   right: 20px;
-  z-index: 1000;
+  z-index: 500;
   display: flex;
   flex-direction: column;
 }
@@ -588,4 +588,80 @@ html {
 
 #zoom-controls button:hover {
   background-color: #45a049;
+}
+
+/* Style untuk modal */
+
+#modulButtons {
+  display: flex;
+  flex-direction: column;   /* Atur agar tombol tersusun vertikal */
+  align-items: center;      /* Ini yang bikin tombolnya rata tengah */
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Tambahan untuk ukuran sama */
+  width: 250px;              /* Atur lebar tetap */
+  height: 80px;              /* Atur tinggi tetap */
+  display: flex;             /* Supaya teks bisa rata tengah */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.btn:hover {
+  background-color: #388e3c;
+  transform: translateY(-2px);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Style untuk konten modal */
+.modal-content {
+  background-color: white;
+  margin: 60px auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style untuk tombol close */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Responsive iframe */
+.pdf-container {
+  width: 100%;
+  height: 500px;
 }

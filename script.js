@@ -248,7 +248,7 @@ document.addEventListener("mouseup", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  showContent("class");
+  showContent("modul");
 
   // Set the first item to active initially
   const sidebarItems = document.querySelectorAll(".sidebar ul li");
@@ -627,3 +627,106 @@ window.addEventListener("beforeunload", function (event) {
   event.preventDefault();
   event.returnValue = "";
 });
+
+
+
+// SCRIPT MODAL DAN YOUTUBE
+// Daftar Modul Ajar (PDF & YouTube)
+const modules = [
+  {
+    title: "Materi 1 - Pengenalan PBO",
+    type: "pdf",
+    src: "Modul/Modul Ajar Pertemuan 1.pdf"
+  },
+  {
+    title: "Video 1 - Cara Penggunaan OOPify",
+    type: "youtube",
+    src: "https://www.youtube.com/embed/0hp3vWq9jwI?si=ZLTW0C82FjWR_0OB"
+  },
+  {
+    title: "Materi 2 - Class dan Object",
+    type: "youtube",
+    src: "Modul/Modul Ajar Pertemuan 2.pdf"
+  },
+  {
+    title: "Video 2 - Membuat Class dan Object",
+    type: "youtube",
+    src: "https://www.youtube.com/embed/2bWfC2t9TA8?si=F4rmsjD1Y0_MuShJ"
+  },
+  {
+    title: "Materi 3 - Encapsulation",
+    type: "pdf",
+    src: "Modul/Modul Ajar Pertemuan 3.pdf"
+  },
+  {
+    title: "Video 3 - Menerapkan Encapsulation",
+    type: "youtube",
+    src: "https://www.youtube.com/embed/fOzcMg5ci0Q?si=--mflQUJK8RhPv9I"
+  },
+  {
+    title: "Materi 4 - Inheritance",
+    type: "youtube",
+    src: "Modul/Modul Ajar Pertemuan 4.pdf"
+  },
+  {
+    title: "Video 4 - Menerapkan Inheritance",
+    type: "youtube",
+    src: "https://www.youtube.com/embed/alZd0dMv-pc?si=q7PBhw36rFfO9Rs8"
+  },
+];
+
+// Elemen-elemen modal
+const modal = document.getElementById("modal");
+const closeBtn = document.querySelector(".close");
+const pdfViewer = document.getElementById("pdfViewer");
+const youtubeViewer = document.getElementById("youtubeViewer");
+const modalTitle = document.getElementById("modalTitle");
+
+// Tempat tombol modul
+const buttonContainer = document.getElementById("modulButtons");
+
+// Buat tombol-tombol berdasarkan data modul
+modules.forEach((modul, index) => {
+  const button = document.createElement("button");
+  button.className = "openModal btn";
+  button.innerText = modul.title;
+  button.dataset.index = index;
+  buttonContainer.appendChild(button);
+});
+
+// Event klik pada tombol modul
+document.querySelectorAll(".openModal").forEach(button => {
+  button.addEventListener("click", function () {
+    const index = this.dataset.index;
+    const modul = modules[index];
+
+    modalTitle.innerText = modul.title;
+
+    if (modul.type === "pdf") {
+      pdfViewer.src = modul.src;
+      pdfViewer.style.display = "block";
+      youtubeViewer.style.display = "none";
+    } else if (modul.type === "youtube") {
+      youtubeViewer.src = modul.src;
+      youtubeViewer.style.display = "block";
+      pdfViewer.style.display = "none";
+    }
+
+    modal.style.display = "block";
+  });
+});
+
+// Tutup modal
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+  pdfViewer.src = "";
+  youtubeViewer.src = "";
+};
+
+window.onclick = event => {
+  if (event.target === modal) {
+    modal.style.display = "none";
+    pdfViewer.src = "";
+    youtubeViewer.src = "";
+  }
+};
