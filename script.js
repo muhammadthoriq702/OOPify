@@ -641,7 +641,7 @@ const modules = [
   {
     title: "Video 1 - Cara Penggunaan OOPify",
     type: "youtube",
-    src: "https://www.youtube.com/embed/0hp3vWq9jwI?si=ZLTW0C82FjWR_0OB"
+    src: "https://www.youtube.com/embed/3TYB_LlJ4bU?si=ojSCZp_7nykr3yA7"
   },
   {
     title: "Materi 2 - Class dan Object",
@@ -651,7 +651,7 @@ const modules = [
   {
     title: "Video 2 - Membuat Class dan Object",
     type: "youtube",
-    src: "https://www.youtube.com/embed/2bWfC2t9TA8?si=F4rmsjD1Y0_MuShJ"
+    src: "https://www.youtube.com/embed/brUHjyy89e0?si=Fwwpffhu9UV6orWP"
   },
   {
     title: "Materi 3 - Encapsulation",
@@ -661,7 +661,7 @@ const modules = [
   {
     title: "Video 3 - Menerapkan Encapsulation",
     type: "youtube",
-    src: "https://www.youtube.com/embed/fOzcMg5ci0Q?si=--mflQUJK8RhPv9I"
+    src: "https://www.youtube.com/embed/hev4l2LQTLs?si=Mno7eb5MEfyMYzw_"
   },
   {
     title: "Materi 4 - Inheritance",
@@ -671,7 +671,7 @@ const modules = [
   {
     title: "Video 4 - Menerapkan Inheritance",
     type: "youtube",
-    src: "https://www.youtube.com/embed/alZd0dMv-pc?si=q7PBhw36rFfO9Rs8"
+    src: "https://www.youtube.com/embed/koZ6gE6-MhA?si=Q6NtvoxAGQrXVU3b"
   },
 ];
 
