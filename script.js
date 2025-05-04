@@ -651,7 +651,7 @@ const modules = [
   {
     title: "Video 2 - Membuat Class dan Object",
     type: "youtube",
-    src: "https://www.youtube.com/embed/brUHjyy89e0?si=Fwwpffhu9UV6orWP"
+    src: "https://www.youtube.com/embed/3TYB_LlJ4bU?si=ojSCZp_7nykr3yA7"
   },
   {
     title: "Materi 3 - Encapsulation",
@@ -661,7 +661,7 @@ const modules = [
   {
     title: "Video 3 - Menerapkan Encapsulation",
     type: "youtube",
-    src: "https://www.youtube.com/embed/hev4l2LQTLs?si=Mno7eb5MEfyMYzw_"
+    src: "https://www.youtube.com/embed/3TYB_LlJ4bU?si=ojSCZp_7nykr3yA7"
   },
   {
     title: "Materi 4 - Inheritance",
