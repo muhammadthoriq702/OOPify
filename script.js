@@ -643,33 +643,33 @@ const modules = [
     type: "youtube",
     src: "https://www.youtube.com/embed/3TYB_LlJ4bU?si=ojSCZp_7nykr3yA7"
   },
+  // {
+  //   title: "Materi 2 - Class dan Object",
+  //   type: "youtube",
+  //   src: "Modul/Modul Ajar Pertemuan 2.pdf"
+  // },
+  // {
+  //   title: "Video 2 - Membuat Class dan Object",
+  //   type: "youtube",
+  //   src: "https://www.youtube.com/embed/brUHjyy89e0?si=Fwwpffhu9UV6orWP"
+  // },
   {
-    title: "Materi 2 - Class dan Object",
-    type: "youtube",
-    src: "Modul/Modul Ajar Pertemuan 2.pdf"
-  },
-  {
-    title: "Video 2 - Membuat Class dan Object",
-    type: "youtube",
-    src: "https://www.youtube.com/embed/brUHjyy89e0?si=Fwwpffhu9UV6orWP"
-  },
-  {
-    title: "Materi 3 - Encapsulation",
+    title: "Materi 2 - Encapsulation",
     type: "pdf",
     src: "Modul/Modul Ajar Pertemuan 3.pdf"
   },
   {
-    title: "Video 3 - Menerapkan Encapsulation",
+    title: "Video 2 - Menerapkan Encapsulation",
     type: "youtube",
     src: "https://www.youtube.com/embed/hev4l2LQTLs?si=Mno7eb5MEfyMYzw_"
   },
   {
-    title: "Materi 4 - Inheritance",
+    title: "Materi 3 - Inheritance",
     type: "youtube",
     src: "Modul/Modul Ajar Pertemuan 4.pdf"
   },
   {
-    title: "Video 4 - Menerapkan Inheritance",
+    title: "Video 3 - Menerapkan Inheritance",
     type: "youtube",
     src: "https://www.youtube.com/embed/koZ6gE6-MhA?si=Q6NtvoxAGQrXVU3b"
   },
