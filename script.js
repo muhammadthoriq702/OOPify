@@ -656,7 +656,7 @@ const modules = [
   {
     title: "Materi 2 - Encapsulation",
     type: "pdf",
-    src: "Modul/Modul Ajar Pertemuan 3.pdf"
+    src: "Modul/Modul Ajar Pertemuan 2-.pdf"
   },
   {
     title: "Video 2 - Menerapkan Encapsulation",
